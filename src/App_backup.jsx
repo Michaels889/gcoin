@@ -2,47 +2,42 @@ import React, { useEffect, useState } from 'react';
 import { Routes, Route, Link } from 'react-router-dom';
 import ClaimForm from './components/ClaimForm';
 import LiquidityForm from './components/LiquidityForm';
+import { ethers } from 'ethers';
+import config from './config';
+import tokenABI from './abis/GMECOIN.json';
 
 export default function App() {
   const [account, setAccount] = useState("");
+  const [balance, setBalance] = useState("");
 
-  useEffect(() => {
-    if (window.ethereum) {
-      window.ethereum.request({ method: 'eth_requestAccounts' })
-        .then(accounts => setAccount(accounts[0]));
-    }
-  }, []);
-
+  // Kết nối MetaMask
   useEffect(() => {
     const connectWallet = async () => {
       try {
-        // Kiểm tra MetaMask có sẵn
         if (window.ethereum) {
-          // Kiểm tra đã kết nối trước đó chưa
           const accounts = await window.ethereum.request({ method: 'eth_accounts' });
           if (accounts.length > 0) {
             setAccount(accounts[0]);
           } else {
-            // Chưa kết nối => yêu cầu kết nối
             const newAccounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
             setAccount(newAccounts[0]);
           }
         } else {
-          console.log("⚠️ MetaMask chưa được cài đặt.");
+          console.error("🦊 MetaMask chưa được cài đặt.");
         }
       } catch (error) {
-        // Bắt lỗi MetaMask
         if (error.code === -32002) {
-          console.warn("⏳ Đang chờ MetaMask cho phép. Vui lòng kiểm tra ví.");
+          console.warn("🛑 Đang chờ MetaMask cho phép. Vui lòng kiểm tra ví.");
         } else {
-          console.error("🚫 Lỗi kết nối MetaMask:", error.message);
+          console.error("❌ Lỗi kết nối MetaMask:", error.message);
         }
       }
     };
-  
+
     connectWallet();
   }, []);
 
+  // Lấy số dư token
   useEffect(() => {
     const loadBalance = async () => {
       if (account && window.ethereum) {
@@ -62,14 +57,14 @@ export default function App() {
       {/* Hiển thị địa chỉ ví */}
       {account ? (
         <div style={{ marginBottom: '10px' }}>
-          <strong>Địa chỉ ví:</strong> {account.slice(0, 6)}...{account.slice(-4)}
-          <p><strong>Số dư GMECOIN:</strong> {balance}</p>
           <button
             onClick={() => navigator.clipboard.writeText(account)}
             style={{ marginLeft: '10px', cursor: 'pointer' }}
           >
             📋 Copy
           </button>
+          <strong>Địa chỉ ví:</strong> {account.slice(0, 6)}...{account.slice(-4)}
+          <p><strong>Số dư GMECOIN:</strong> {balance}</p>
         </div>
       ) : (
         <p><em>Chưa kết nối ví</em></p>
