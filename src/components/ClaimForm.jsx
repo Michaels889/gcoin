@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
 import { ethers } from 'ethers';
-import { CONTRACT_ADDRESS, CONTRACT_ABI } from '../config';
+//import { CONTRACT_ADDRESS, CONTRACT_ABI, CONTRACT_ABI } from '../config';
+import GMECOIN_ABI from '../abis/GMECOIN.json';
+import CLAIM_ABI from '../abis/ClaimContract.json';
+import config from '../config';
+config.CONTRACT_ADDRESS;
 
 export default function ClaimForm() {
   const [status, setStatus] = useState('');
