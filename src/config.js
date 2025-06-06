@@ -1,5 +1,4 @@
-export const CONTRACT_ADDRESS = "0x3e4449bcFA0518164e505cD168DBf0730bf24c5f"; // Thay bằng địa chỉ thật
-
+export const CONTRACT_ADDRESS = "0x197f1FB9aC65fEC38f436Cb94bB02551525E0584"; // Thay bằng địa chỉ thật
 export const CONTRACT_ABI = [
   {
     "inputs": [

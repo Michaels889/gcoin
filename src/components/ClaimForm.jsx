@@ -10,7 +10,7 @@ export default function ClaimForm() {
     try {
       if (!window.ethereum) throw new Error('MetaMask không được phát hiện');
       await window.ethereum.request({ method: 'eth_requestAccounts' });
-      const provider = new ethers.BrowserProvider(window.ethereum);
+      const provider = new ethers.providers.Web3Provider(window.ethereum);
       const signer = await provider.getSigner();
       const contract = new ethers.Contract(CONTRACT_ADDRESS, CONTRACT_ABI, signer);
 
