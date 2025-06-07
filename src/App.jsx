@@ -76,7 +76,7 @@ export default function App() {
       </nav>
 
       <Routes>
-        <Route path="/claim" element={<ClaimForm />} />
+        <Route path="/claim" element={<ClaimForm account={account} />} />
         <Route path="/liquidity" element={<LiquidityForm />} />
         <Route path="*" element={<ClaimForm />} />
       </Routes>

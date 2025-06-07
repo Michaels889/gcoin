@@ -6,7 +6,7 @@ import CLAIM_ABI from '../abis/ClaimContract.json';
 import config from '../config';
 config.CONTRACT_ADDRESS;
 
-export default function ClaimForm() {
+export default function ClaimForm({ account }) {
   const [status, setStatus] = useState('');
   const [isClaimed, setIsClaimed] = useState(false);
 
